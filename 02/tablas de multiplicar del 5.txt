@@ -1,0 +1,10 @@
+5 X 1 es igual a 5
+5 X 2 es igual a 10
+5 X 3 es igual a 15
+5 X 4 es igual a 20
+5 X 5 es igual a 25
+5 X 6 es igual a 30
+5 X 7 es igual a 35
+5 X 8 es igual a 40
+5 X 9 es igual a 45
+5 X 10 es igual a 50
