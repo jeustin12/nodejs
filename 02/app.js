@@ -19,6 +19,6 @@ const argv = require('yargs')
     }).argv;
 console.clear();
 
-CrearTabla(argv.b, argv.l)
+CrearTabla(argv.b, argv.l, argv.limite)
     .then((nombreArchivo) => console.log(nombreArchivo, 'creado'))
     .catch((err) => console.log(err));
