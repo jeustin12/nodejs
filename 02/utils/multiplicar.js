@@ -1,4 +1,5 @@
 const fs = require('fs');
+const colors = require('colors');
 
 const CrearTabla = async (base = 5, listar, limite) => {
     try {
@@ -8,11 +9,14 @@ const CrearTabla = async (base = 5, listar, limite) => {
             salida += `${base} X ${i} es igual a ${base * i}\n`;
         }
 
-        if (listar === true) console.log(salida);
+        if (listar === true) console.log(colors.rainbow(salida));
 
-        fs.writeFileSync(`tablas de multiplicar del ${base}.txt`, salida);
+        fs.writeFileSync(
+            `./tablas/tablas de multiplicar del ${base}.txt`,
+            salida
+        );
 
-        return `tabla del ${base}.txt creada`;
+        return colors.rainbow(`tabla del ${base}.txt creada`);
     } catch (error) {
         throw error;
     }
