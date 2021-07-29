@@ -6,6 +6,7 @@ const {
     leerInput,
     borrarTareaMenu,
     confirmar,
+    CompletarTareasMenu,
 } = require('./helpers/inquirer');
 const Tareas = require('./models/tareas');
 
@@ -37,9 +38,14 @@ const main = async () => {
                 tareas.ListadoPendientesCompletadas(false);
                 break;
             case '5':
+                const ids = await CompletarTareasMenu(tareas.listadoArr);
+                tareas.toggleTareas(ids);
                 break;
             case '6':
                 const id = await borrarTareaMenu(tareas.listadoArr);
+                if (id === '0') {
+                    break;
+                }
                 const ConfirmarBorrar = await confirmar('¿Esta seguro?');
                 if (ConfirmarBorrar) {
                     tareas.borrarTarea(id);
