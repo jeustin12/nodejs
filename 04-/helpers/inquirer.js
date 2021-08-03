@@ -13,7 +13,7 @@ const preguntas = [
             },
             {
                 value: 2,
-                name: `${'2.'.brightGreen}Historia`,
+                name: `${'2.'.brightGreen}Historial`,
             },
             {
                 value: 0,
@@ -66,12 +66,12 @@ const leerInput = async (message) => {
     return desc;
 };
 
-const borrarTareaMenu = async (tareas = []) => {
-    const choices = tareas.map((tarea, i) => {
+const listarLugares = async (Lugares = []) => {
+    const choices = Lugares.map((lugar, i) => {
         const idx = `${i + 1}`.brightYellow;
         return {
-            value: tarea.id,
-            name: `${idx} ${tarea.desc}`,
+            value: lugar.id,
+            name: `${idx} ${lugar.nombre}`,
         };
     });
     choices.unshift({
@@ -82,7 +82,7 @@ const borrarTareaMenu = async (tareas = []) => {
         {
             type: 'list',
             name: 'id',
-            message: 'Borrar',
+            message: 'Seleccione lugar',
             choices,
         },
     ];
@@ -133,7 +133,7 @@ module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
-    borrarTareaMenu,
+    listarLugares,
     confirmar,
     CompletarTareasMenu,
 };

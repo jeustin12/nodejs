@@ -25,11 +25,39 @@ class Busquedas {
             });
 
             const resp =  await instace.get();
-            console.log(resp.data);
-            return []; //retornar los lugares que coincidan
+            return resp.data.features.map(lugar=>({
+                id: lugar.id,
+                nombre:lugar.place_name,
+                lng:lugar.center[0],
+                lat:lugar.center[1],
+            }))
+        } catch (error) {
+            return [];
+        }
+    }
+
+    async clima(lat,lng){
+        try {
+            const instance = axios.create({
+                baseURL:`https://api.openweathermap.org/data/2.5/weather`,
+                params:{
+                    lat:lat,
+                    lon:lng,
+                    appid:process.env.OPEN_WEATHER_KEY,
+                    units:'metric',
+                    lang:'es'
+                }
+            })
+            const resp = await instance.get()
+            const {weather,main} = resp.data
+            return {
+                desc:weather[0].description,
+                temp:main.temp,
+                min:main.temp_min,
+                max:main.temp_max
+            }
         } catch (error) {
             throw new Error(error)
-            // return [];
         }
     }
 }
