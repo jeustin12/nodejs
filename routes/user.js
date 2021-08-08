@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { body, check } = require("express-validator");
 const {
     usuariosGet,
     usuariosPut,
@@ -7,7 +8,8 @@ const {
     usuariosPacth,
     ErrorPage,
 } = require("../controllers/user.controller");
-
+const { validateRol } = require("../helpers/db-validators");
+const { validarCampos } = require("../middlewares/validar_campos");
 const router = Router();
 
 router.get("/", usuariosGet);
@@ -15,8 +17,20 @@ router.get("/", usuariosGet);
 router.get("*", ErrorPage);
 
 router.put("/:id", usuariosPut);
-
-router.post("/", usuariosPost);
+router.post(
+    "/",
+    [
+        body("nombre", "El nombre es obligatorio").not().isEmpty(),
+        body("password", "El password debe ser de mas de 6 letras").isLength({
+            min: 6,
+        }),
+        body("correo", "El correo no es valido").isEmail(),
+        check("rol").custom((rol) => validateRol(rol)),
+        // body("rol", "No es un rol permitido").isIn(["ADMIN_ROLE","USER_ROLE",]),
+        validarCampos,
+    ],
+    usuariosPost
+);
 
 router.patch("/", usuariosPacth);
 
