@@ -8,7 +8,11 @@ const {
     usuariosPacth,
     ErrorPage,
 } = require("../controllers/user.controller");
-const { validateRol } = require("../helpers/db-validators");
+const {
+    validateRol,
+    emailExiste,
+    existUser,
+} = require("../helpers/db-validators");
 const { validarCampos } = require("../middlewares/validar_campos");
 const router = Router();
 
@@ -16,7 +20,11 @@ router.get("/", usuariosGet);
 
 router.get("*", ErrorPage);
 
-router.put("/:id", usuariosPut);
+router.put(
+    "/:id",
+    // [check("id").custom((id) => existUser(id))],
+    usuariosPut
+);
 router.post(
     "/",
     [
@@ -25,8 +33,8 @@ router.post(
             min: 6,
         }),
         body("correo", "El correo no es valido").isEmail(),
+        check("correo").custom((correo) => emailExiste(correo)),
         check("rol").custom((rol) => validateRol(rol)),
-        // body("rol", "No es un rol permitido").isIn(["ADMIN_ROLE","USER_ROLE",]),
         validarCampos,
     ],
     usuariosPost
