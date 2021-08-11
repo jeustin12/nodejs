@@ -60,14 +60,13 @@ const usuariosPacth = (req = request, res = response) => {
 const usuariosDelete = async (req = request, res = response) => {
     const { id } = req.params;
 
-    // const usuario = await Usuario.findByIdAndUpdate(
-    //     id,
-    //     { estado: false },
-    //     { new: true }
-    // );
+    const usuario = await Usuario.findByIdAndUpdate(
+        id,
+        { estado: false },
+        { new: true }
+    );
 
-    // res.json(usuario);
-    res.send("id");
+    res.json(usuario);
 };
 
 module.exports = {
