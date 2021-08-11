@@ -20,11 +20,14 @@ router.get("/", usuariosGet);
 
 router.get("*", ErrorPage);
 
-router.put(
-    "/:id",
-    // [check("id").custom((id) => existUser(id))],
-    usuariosPut
-);
+router.put("/:id",
+[
+    check('id','No es un id valido').isMongoId(),
+    check('id').custom((id)=> existUser(id)),
+    check("rol").custom((rol) => validateRol(rol)),
+    validarCampos
+]
+, usuariosPut);
 router.post(
     "/",
     [
@@ -42,6 +45,9 @@ router.post(
 
 router.patch("/", usuariosPacth);
 
-router.delete("/", usuariosDelete);
+router.delete("/:id",[
+    check('id','No es un id valido').isMongoId(),
+    check('id').custom((id)=> existUser(id)),
+], usuariosDelete);
 
 module.exports = router;
