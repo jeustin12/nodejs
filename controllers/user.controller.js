@@ -8,10 +8,14 @@ const ErrorPage = (req = request, res) => {
 
 const usuariosGet = async (req = request, res = response) => {
     const { limite = 5, desde = 0 } = req.query;
-    const usuarios = await Usuario.find()
-        .skip(Number(desde))
-        .limit(Number(limite));
+    const [total, usuarios] = await Promise.all([
+        Usuario.countDocuments({ estado: true }),
+        Usuario.find({ estado: true })
+            .skip(Number(desde))
+            .limit(Number(limite)),
+    ]);
     res.json({
+        total,
         usuarios,
     });
 };
