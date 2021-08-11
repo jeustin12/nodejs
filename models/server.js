@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { dbconection } = require("../db/config");
+const { dbConnection } = require("../db/config");
 
 class Server {
     constructor() {
@@ -16,7 +16,7 @@ class Server {
     }
 
     async conectarDB() {
-        await dbconection();
+        await dbConnection();
     }
 
     middlewares() {
